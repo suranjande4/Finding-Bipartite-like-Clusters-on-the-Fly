@@ -1,0 +1,57 @@
+# plot_utils.py
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def plot_runtime_comparison(no_nodes, pt_time_mean, pt_time_std, our_time_mean, our_time_std, eta, save_path):
+    plt.figure(figsize=(10, 6))
+    plt.plot(no_nodes, pt_time_mean, label="ECD", marker="o", linestyle="--", color="orange")
+    plt.plot(no_nodes, our_time_mean, label="ECD+Our", marker="s", linestyle="-", color="skyblue")
+    plt.fill_between(no_nodes, pt_time_mean - pt_time_std, pt_time_mean + pt_time_std, color="orange", alpha=0.2)
+    plt.fill_between(no_nodes, our_time_mean - our_time_std, our_time_mean + our_time_std, color="skyblue", alpha=0.2)
+    plt.xlabel("Number of Vertices in Each Partition")
+    plt.ylabel("Run Time (Seconds)")
+    plt.legend(title="Algorithm")
+    plt.tick_params(axis="both", which="both", direction="in", length=6, width=1)
+    plt.tight_layout()
+    plt.savefig(f"{save_path}/runtime_eta_{eta}.png", dpi=300, bbox_inches="tight")
+    plt.close()
+
+def plot_flow_ratio_comparison(no_nodes, pt_flr_min, our_flr_min, eta, save_path):
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x=no_nodes, y=pt_flr_min, label="ECD", marker="o", linestyle="--", color="orange")
+    sns.lineplot(x=no_nodes, y=our_flr_min, label="ECD+Our", marker="s", linestyle="-", color="skyblue")
+    plt.ylim(0, 1)
+    plt.xlabel("Number of Vertices in Each Partition")
+    plt.ylabel("Flow Ratio")
+    plt.legend(title="Algorithm")
+    plt.tick_params(axis='both', which='both', direction='in', length=6, width=1)
+    plt.grid(False)
+    plt.tight_layout()
+    plt.savefig(f"{save_path}/flr_eta_{eta}.png", dpi=300, bbox_inches="tight")
+    plt.close()
+
+def plot_runtime_and_bipartiteness(edge_probs, pt_time, our_time, pt_flr, our_flr, save_path="."):
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x=edge_probs, y=our_time, label="MS+Our", marker="o", linestyle="-", color="skyblue")
+    sns.lineplot(x=edge_probs, y=pt_time, label="MS", marker="s", linestyle="--", color="orange")
+    plt.xlabel("Probability of Edges Between Clusters")
+    plt.ylabel("Time (Seconds)")
+    plt.legend(title="Algorithm")
+    plt.tick_params(axis='both', direction='in', length=6, width=1)
+    plt.grid(False)
+    plt.tight_layout()
+    plt.savefig(f"{save_path}/runtime_comparison.png", dpi=300, bbox_inches="tight")
+    plt.close()
+
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x=edge_probs, y=our_flr, label="MS+Our", marker="o", linestyle="-", color="skyblue")
+    sns.lineplot(x=edge_probs, y=pt_flr, label="MS", marker="s", linestyle="--", color="orange")
+    plt.ylim(0, 1.5)
+    plt.xlabel("Probability of Edges Between Clusters")
+    plt.ylabel("Bipartiteness Ratio")
+    plt.legend(title="Algorithm")
+    plt.tick_params(axis='both', direction='in', length=6, width=1)
+    plt.grid(False)
+    plt.tight_layout()
+    plt.savefig(f"{save_path}/bipartiteness_comparison.png", dpi=300, bbox_inches="tight")
+    plt.close()
