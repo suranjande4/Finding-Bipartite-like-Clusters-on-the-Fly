@@ -1,1 +1,1 @@
-# Finding-Bipartite-like-Clusters-on-the-Fly
+# Online Sparsification of Bipartite-Like Clusters in Graphs
