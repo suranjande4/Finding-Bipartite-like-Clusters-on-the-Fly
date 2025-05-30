@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 import random
-import stag.graph
 import stag.random
 
 def offline_edge_sampler(G_orig, C, lambda_k_plus_1):
